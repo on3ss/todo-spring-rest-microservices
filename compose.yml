@@ -27,6 +27,7 @@ services:
       - todo-net
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
 
   auth-service:
     build: ./auth-service
@@ -40,6 +41,29 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+      postgres:
+        condition: service_started
+    networks:
+      - todo-net
+
+  todo-service:
+    build: ./todo-service
+    container_name: todo-service
+    restart: unless-stopped
+    ports:
+      - "8082:8082"
+    environment:
+      SERVER_PORT: 8082
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+      # Connect to the same Postgres but with the todo_schema
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}?currentSchema=todo_schema
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      # Hibernate specific setting to ensure it targets the right schema
+      SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA: todo_schema
     depends_on:
       discovery-server:
         condition: service_healthy

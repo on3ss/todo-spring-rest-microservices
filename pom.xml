@@ -39,5 +39,6 @@
         <module>discovery-server</module>
         <module>auth-service</module>
         <module>gateway-service</module>
+        <module>todo-service</module>
     </modules>
 </project>
