@@ -1,4 +1,4 @@
-package com.on3ss.gateway_service;
+package com.on3ss.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

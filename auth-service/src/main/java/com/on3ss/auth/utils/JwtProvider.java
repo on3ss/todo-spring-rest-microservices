@@ -1,10 +1,10 @@
-package com.on3ss.auth_service.utils;
+package com.on3ss.auth.utils;
 
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
-import com.on3ss.auth_service.domain.User;
+import com.on3ss.auth.domain.User;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

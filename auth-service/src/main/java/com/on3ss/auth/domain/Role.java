@@ -1,4 +1,4 @@
-package com.on3ss.auth_service.domain;
+package com.on3ss.auth.domain;
 
 import java.util.UUID;
 

@@ -16,3 +16,8 @@ spring:
         #   uri: lb://todo-service
         #   predicates:
         #     - Path=/api/todos/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://discovery-server:8761/eureka/}

@@ -1,6 +1,23 @@
 server:
   port: 8761
 
+spring:
+  application:
+    name: discovery-server
+  docker:
+    compose:
+      enabled: true
+      file: compose.yaml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
 eureka:
   instance:
     hostname: localhost
