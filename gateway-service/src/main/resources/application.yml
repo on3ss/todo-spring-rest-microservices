@@ -2,22 +2,29 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: gateway-service
   cloud:
+    # We leave the gateway section empty or for global settings 
+    # since routes are now in Java.
     gateway:
-      routes:
-        - id: auth-service
-          uri: lb://AUTH-SERVICE
-          predicates:
-            - Path=/api/auth/**
-          filters:
-            - StripPrefix=0
-
-        # - id: todo-service
-        #   uri: lb://todo-service
-        #   predicates:
-        #     - Path=/api/todos/**
+      discovery:
+        locator:
+          enabled: false # Keep false to avoid duplicate/auto-generated routes
 
 eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://discovery-server:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+# Helpful for debugging LoadBalancer and Route status
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway, health, info
+  endpoint:
+    gateway:
+      enabled: true

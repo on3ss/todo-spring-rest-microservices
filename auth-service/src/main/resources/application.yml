@@ -22,8 +22,10 @@ eureka:
     service-url:
       defaultZone: http://discovery-server:8761/eureka/
   instance:
-    # This helps Eureka identify the service in its dashboard
-    prefer-ip-address: true
+    # 🚀 Change this to FALSE for Docker networking stability
+    prefer-ip-address: false 
+    # 🚀 Explicitly set the hostname to match the Docker service name
+    hostname: auth-service
     non-secure-port: 8081
     instance-id: ${spring.application.name}:${server.port}:${random.value}
 
