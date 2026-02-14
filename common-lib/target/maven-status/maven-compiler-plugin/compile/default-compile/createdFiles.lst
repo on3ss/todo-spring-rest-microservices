@@ -1,6 +1,0 @@
-com/on3ss/common/exceptions/BusinessException.class
-com/on3ss/common/exceptions/ErrorResponse.class
-com/on3ss/common/events/ImageProcessEvent.class
-com/on3ss/common/events/ImageProcessEvent$ImageProcessEventBuilder.class
-com/on3ss/common/domain/BaseEntity.class
-com/on3ss/common/exceptions/ErrorResponse$ErrorResponseBuilder.class
