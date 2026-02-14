@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,7 @@ import lombok.Setter;
 @Table(name = "users")
 @Getter
 @Setter
+@Builder
 public class User extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -36,5 +38,6 @@ public class User extends BaseEntity{
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @Builder.Default
     private Set<Role> roles = new HashSet<>();
 }

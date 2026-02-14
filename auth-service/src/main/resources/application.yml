@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 spring:
   datasource:
     # Use the service name 'postgres' defined in your docker-compose
@@ -21,7 +24,8 @@ eureka:
   instance:
     # This helps Eureka identify the service in its dashboard
     prefer-ip-address: true
-    instance-id: ${spring.application.name}:${random.value}
+    non-secure-port: 8081
+    instance-id: ${spring.application.name}:${server.port}:${random.value}
 
 app:
   jwt:
