@@ -2,7 +2,6 @@ package com.on3ss.auth.controller;
 
 import java.util.Collections;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +30,7 @@ public class AuthController {
 
     // @PostMapping("/login")
     // public ResponseEntity<?> login(@RequestBody AuthRequest request) {
-    //     // Logic to return JWT
-    //     return ResponseEntity.ok(new AuthResponse(token));
+    // // Logic to return JWT
+    // return ResponseEntity.ok(new AuthResponse(token));
     // }
 }
