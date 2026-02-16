@@ -28,7 +28,7 @@ eureka:
     hostname: auth-service
     non-secure-port: 8081
     instance-id: ${spring.application.name}:${server.port}:${random.value}
-
+    
 app:
   jwt:
-    secret: ${JWT_SECRET:your-default-local-development-secret-key-32-chars}
+    secret: ${JWT_SECRET}

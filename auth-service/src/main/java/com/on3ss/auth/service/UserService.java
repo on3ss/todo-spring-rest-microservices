@@ -20,7 +20,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
-    @Transactional // Ensures the DB insert is committed properly
+    @Transactional
     public String register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new BusinessException("Email already exists");
@@ -32,6 +32,17 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
+
+        return jwtProvider.generateToken(user);
+    }
+
+    public String login(String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessException("Invalid email or password."));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new BusinessException("Invalid email or password.");
+        }
 
         return jwtProvider.generateToken(user);
     }
