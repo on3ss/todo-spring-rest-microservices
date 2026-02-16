@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     # Use the service name 'postgres' defined in your docker-compose
-    url: jdbc:postgresql://postgres:5432/mydatabase
-    username: myuser
-    password: secret
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

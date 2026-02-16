@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    # These will be overridden by the environment variables in docker-compose
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    # Manually setting the dialect can bypass the "metadata" crash
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
