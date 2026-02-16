@@ -25,6 +25,6 @@ eureka:
     # 🚀 Change this to FALSE for Docker networking stability
     prefer-ip-address: false 
     # 🚀 Explicitly set the hostname to match the Docker service name
-    hostname: auth-service
+    hostname: todo-service
     non-secure-port: 8082
     instance-id: ${spring.application.name}:${server.port}:${random.value}

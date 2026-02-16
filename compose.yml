@@ -72,7 +72,7 @@ services:
     environment:
       SERVER_PORT: 8082
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${TODO_POSTGRES_DB_NAME}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-todo:5432/${TODO_POSTGRES_DB_NAME}
       SPRING_DATASOURCE_USERNAME: ${TODO_POSTGRES_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${TODO_POSTGRES_PASSWORD}
     depends_on:

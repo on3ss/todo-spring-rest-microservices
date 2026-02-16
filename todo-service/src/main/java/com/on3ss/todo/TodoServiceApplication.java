@@ -1,4 +1,4 @@
-package com.on3ss.todo_service;
+package com.on3ss.todo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

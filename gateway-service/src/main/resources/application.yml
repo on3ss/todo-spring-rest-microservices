@@ -28,3 +28,7 @@ management:
   endpoint:
     gateway:
       enabled: true
+
+app:
+  jwt:
+    secret: ${JWT_SECRET} 
