@@ -1,3 +1,6 @@
+server:
+  port: 8082
+
 spring:
   datasource:
     # These will be overridden by the environment variables in docker-compose
@@ -13,3 +16,15 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8761/eureka/
+  instance:
+    # 🚀 Change this to FALSE for Docker networking stability
+    prefer-ip-address: false 
+    # 🚀 Explicitly set the hostname to match the Docker service name
+    hostname: auth-service
+    non-secure-port: 8082
+    instance-id: ${spring.application.name}:${server.port}:${random.value}
