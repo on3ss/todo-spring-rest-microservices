@@ -37,6 +37,6 @@ public class Todo extends BaseEntity {
     @Builder.Default
     private boolean completed = false;
 
-    @Column(name = "user_id", nullable = false)
-    private UUID userId;
+    @Column(name = "user_uuid", nullable = false)
+    private UUID userUuid;
 }

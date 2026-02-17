@@ -1,7 +1,11 @@
 package com.on3ss.todo.service;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
+import com.on3ss.common.exceptions.BusinessException;
 import com.on3ss.todo.dto.CreateTodoRequest;
 import com.on3ss.todo.entity.Todo;
 import com.on3ss.todo.repository.TodoRepository;
@@ -19,8 +23,25 @@ public class TodoService {
         Todo todo = Todo.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
-                .userId(userContext.getCurrentUserId())
+                .userUuid(userContext.getCurrentUserId())
                 .build();
+
+        return repository.save(todo);
+    }
+
+    public List<Todo> todos() {
+        return repository.findByUserUuid(userContext.getCurrentUserId());
+    }
+
+    public Todo toggle(UUID uuid, boolean completed) {
+        Todo todo = repository.findById(uuid)
+                .orElseThrow(() -> new BusinessException("Todo not found!"));
+
+        if (!todo.getUserUuid().equals(userContext.getCurrentUserId())) {
+            throw new BusinessException("You do not have permission to update this todo");
+        }
+
+        todo.setCompleted(completed);
 
         return repository.save(todo);
     }
