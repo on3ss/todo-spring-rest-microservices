@@ -24,8 +24,10 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
+        String path = request.getURI().getPath();
 
-        if (request.getURI().getPath().startsWith("/auth/")) {
+        // Skip authentication for any path that ends with /auth/** pattern
+        if (path.matches(".*/auth/.*") || path.endsWith("/auth") || path.contains("/auth/")) {
             return chain.filter(exchange);
         }
 
