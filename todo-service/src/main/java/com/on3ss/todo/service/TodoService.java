@@ -1,8 +1,9 @@
 package com.on3ss.todo.service;
 
-import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.on3ss.common.exceptions.BusinessException;
@@ -29,8 +30,8 @@ public class TodoService {
         return repository.save(todo);
     }
 
-    public List<Todo> todos() {
-        return repository.findByUserUuid(userContext.getCurrentUserId());
+    public Page<Todo> todos(Pageable pageable) {
+        return repository.findByUserUuid(userContext.getCurrentUserId(), pageable);
     }
 
     public Todo toggle(UUID uuid, boolean completed) {

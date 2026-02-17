@@ -1,18 +1,20 @@
 package com.on3ss.todo.controller;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.on3ss.todo.dto.CreateTodoRequest;
+import com.on3ss.todo.dto.PageResponse;
 import com.on3ss.todo.dto.TodoResponse;
 import com.on3ss.todo.dto.ToggleTodoRequest;
 import com.on3ss.todo.entity.Todo;
+import com.on3ss.todo.mapper.PaginationMapper;
 import com.on3ss.todo.service.TodoService;
 
 import jakarta.validation.Valid;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class TodoController {
 
     private final TodoService service;
+    private final PaginationMapper paginationMapper;
 
     @PostMapping
     public ResponseEntity<TodoResponse> createTodo(@Valid @RequestBody CreateTodoRequest request) {
@@ -38,13 +41,10 @@ public class TodoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TodoResponse>> todos() {
-        List<Todo> todos = service.todos();
-        List<TodoResponse> todoResponses = todos.stream()
-                .map(TodoResponse::fromEntity)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(todoResponses);
+    public ResponseEntity<PageResponse<TodoResponse>> todos(Pageable pageable) {
+        Page<Todo> todoPage = service.todos(pageable);
+        PageResponse<TodoResponse> response = paginationMapper.toPageResponse(todoPage, TodoResponse::fromEntity);
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{uuid}")
