@@ -22,6 +22,7 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,6 +52,12 @@ public class TodoController {
     public ResponseEntity<TodoResponse> toggle(@PathVariable UUID uuid, @RequestBody ToggleTodoRequest request) {
         Todo todo = service.toggle(uuid, request.isCompleted());
         return ResponseEntity.ok(TodoResponse.fromEntity(todo));
+    }
+
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<Void> delete(@PathVariable UUID uuid) {
+        service.delete(uuid);
+        return ResponseEntity.noContent().build();
     }
 
 }

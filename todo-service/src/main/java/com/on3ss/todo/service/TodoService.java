@@ -46,4 +46,14 @@ public class TodoService {
 
         return repository.save(todo);
     }
+
+    public void delete(UUID uuid){
+        Todo todo = repository.findById(uuid)
+                .orElseThrow(() -> new BusinessException("Todo not found!"));
+
+        if (!todo.getUserUuid().equals(userContext.getCurrentUserId())) {
+            throw new BusinessException("You do not have permission to delete this todo");
+        }
+        repository.delete(todo);
+    }
 }
