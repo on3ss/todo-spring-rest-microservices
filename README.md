@@ -188,7 +188,7 @@ healthcheck:
 From project root:
 
 ```bash
-./mvnw clean package && docker compose up --build -d
+docker compose -f compose.dev.yml up --build -d
 ```
 
 This will:
@@ -204,13 +204,13 @@ This will:
 ## Build & Start a Single Service
 
 ```bash
-./mvnw clean package -am {service-name} && docker compose up {service-name} --build -d
+docker compose -f compose.dev.yml up {service-name} -d
 ```
 
 Example:
 
 ```bash
-./mvnw clean package -am auth-service && docker compose up auth-service --build -d
+docker compose -f compose.dev.yml up auth-service --build -d
 ```
 
 ---

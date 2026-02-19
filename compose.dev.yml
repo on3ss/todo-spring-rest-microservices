@@ -2,7 +2,7 @@ services:
   discovery-server:
     build:
       context: .
-      dockerfile: discovery-server/Dockerfile
+      dockerfile: discovery-server/Dockerfile.dev
     container_name: discovery-server
     restart: unless-stopped
     ports:
@@ -61,7 +61,7 @@ services:
   auth-service:
     build:
       context: .
-      dockerfile: auth-service/Dockerfile
+      dockerfile: auth-service/Dockerfile.dev
     container_name: auth-service
     restart: unless-stopped
     ports:
@@ -89,7 +89,7 @@ services:
   todo-service:
     build:
       context: .
-      dockerfile: todo-service/Dockerfile
+      dockerfile: todo-service/Dockerfile.dev
     container_name: todo-service
     restart: unless-stopped
     ports:
@@ -116,7 +116,7 @@ services:
   gateway-service:
     build:
       context: .
-      dockerfile: gateway-service/Dockerfile
+      dockerfile: gateway-service/Dockerfile.dev
     container_name: gateway-service
     restart: unless-stopped
     ports:
