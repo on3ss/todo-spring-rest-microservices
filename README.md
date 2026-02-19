@@ -255,7 +255,7 @@ root/
 
 # 🛣 Roadmap
 
-* [ ] Enable hot reloading inside Docker
+* [x] Enable hot reloading inside Docker
 * [ ] Implement Role-Based Access Control (RBAC)
 * [ ] Add attachment uploads (SFTP + async processing)
 * [ ] Introduce automated tests (move toward TDD)
