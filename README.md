@@ -188,7 +188,7 @@ healthcheck:
 From project root:
 
 ```bash
-docker compose -f compose.dev.yml up --build -d
+docker compose -f compose.dev.yml up -d
 ```
 
 This will:
@@ -210,7 +210,7 @@ docker compose -f compose.dev.yml up {service-name} -d
 Example:
 
 ```bash
-docker compose -f compose.dev.yml up auth-service --build -d
+docker compose -f compose.dev.yml up auth-service -d
 ```
 
 ---
