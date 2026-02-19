@@ -1,14 +1,30 @@
 services:
   discovery-server:
-    build: ./discovery-server
+    build:
+      context: .
+      dockerfile: discovery-server/Dockerfile
     container_name: discovery-server
     restart: unless-stopped
     ports:
       - "8761:8761"
+      - "5004:5005"
+    environment:
+      - SPRING_DEVTOOLS_RESTART_ENABLED=true
+    volumes:
+      - .:/app
+      - ~/.m2:/root/.m2
     networks:
       - todo-net
     healthcheck:
-      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8761/actuator/health" ]
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:8761/actuator/health",
+        ]
       interval: 10s
       retries: 5
       start_period: 30s
@@ -43,11 +59,14 @@ services:
       - todo_data:/var/lib/postgresql/data
 
   auth-service:
-    build: ./auth-service
+    build:
+      context: .
+      dockerfile: auth-service/Dockerfile
     container_name: auth-service
     restart: unless-stopped
     ports:
       - "8081:8081"
+      - "5005:5005"
     environment:
       JWT_SECRET: ${JWT_SECRET}
       SERVER_PORT: 8081
@@ -55,6 +74,10 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-auth:5432/${AUTH_POSTGRES_DB_NAME}
       SPRING_DATASOURCE_USERNAME: ${AUTH_POSTGRES_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${AUTH_POSTGRES_PASSWORD}
+      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
+    volumes:
+      - .:/app
+      - ~/.m2:/root/.m2
     depends_on:
       discovery-server:
         condition: service_healthy
@@ -64,17 +87,24 @@ services:
       - todo-net
 
   todo-service:
-    build: ./todo-service
+    build:
+      context: .
+      dockerfile: todo-service/Dockerfile
     container_name: todo-service
     restart: unless-stopped
     ports:
       - "8082:8082"
+      - "5006:5005"
     environment:
       SERVER_PORT: 8082
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-todo:5432/${TODO_POSTGRES_DB_NAME}
       SPRING_DATASOURCE_USERNAME: ${TODO_POSTGRES_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${TODO_POSTGRES_PASSWORD}
+      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
+    volumes:
+      - .:/app
+      - ~/.m2:/root/.m2
     depends_on:
       discovery-server:
         condition: service_healthy
@@ -84,14 +114,21 @@ services:
       - todo-net
 
   gateway-service:
-    build: ./gateway-service
+    build:
+      context: .
+      dockerfile: gateway-service/Dockerfile
     container_name: gateway-service
     restart: unless-stopped
     ports:
       - "8080:8080"
+      - "5007:5005"
     environment:
       JWT_SECRET: ${JWT_SECRET}
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
+    volumes:
+      - .:/app
+      - ~/.m2:/root/.m2
     depends_on:
       discovery-server:
         condition: service_healthy

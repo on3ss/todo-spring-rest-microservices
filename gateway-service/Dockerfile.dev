@@ -1,0 +1,6 @@
+FROM maven:3.9-eclipse-temurin-21-alpine
+WORKDIR /app
+# No COPY needed because of volume mount
+EXPOSE 8082 5005
+WORKDIR /app/gateway-service
+CMD ["sh", "-c", "../mvnw spring-boot:run -Dspring-boot.run.jvmArguments='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005'"]
