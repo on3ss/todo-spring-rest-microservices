@@ -42,6 +42,7 @@ services:
     networks:
       - todo-net
     volumes:
+      - ./auth-service/initdb:/docker-entrypoint-initdb.d
       - ./auth-service/pg-data:/var/lib/postgresql/data
 
   postgres-todo:
@@ -56,6 +57,7 @@ services:
     networks:
       - todo-net
     volumes:
+      - ./todo-service/initdb:/docker-entrypoint-initdb.d
       - ./todo-service/pg-data:/var/lib/postgresql/data
 
   auth-service:
